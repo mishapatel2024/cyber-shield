@@ -1,21 +1,27 @@
-function sendMessage(){
-  let name = document.getElementById("name").value;
-  let email = document.getElementById("email").value;
-  let message = document.getElementById("message").value;
+function checkEmail(){
+  let emailText = document.getElementById("email").value;
+  let result = document.getElementById("result");
 
-  if(name === "" || email === "" || message === ""){
-    document.getElementById("output").innerText = "⚠️ Please fill all fields";
-    document.getElementById("output").style.color = "red";
+  if(emailText === ""){
+    result.innerText = "⚠️ Please enter email text";
+    result.style.color = "red";
+    return;
   }
-  else{
-    document.getElementById("output").innerText =
-    "✅ Thank you " + name + "! Your message has been sent successfully.";
 
-    document.getElementById("output").style.color = "green";
+  // Simple phishing detection logic
+  let lowerText = emailText.toLowerCase();
 
-    // clear fields
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("message").value = "";
+  if(
+    lowerText.includes("password") ||
+    lowerText.includes("verify") ||
+    lowerText.includes("bank") ||
+    lowerText.includes("click here") ||
+    lowerText.includes("urgent")
+  ){
+    result.innerText = "🚨 WARNING: This looks like PHISHING email!";
+    result.style.color = "red";
+  } else {
+    result.innerText = "✅ Safe email (no strong phishing signs detected)";
+    result.style.color = "green";
   }
 }
